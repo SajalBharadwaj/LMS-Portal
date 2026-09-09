@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  college-lms-portal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: apex_university_lms
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    volumes:
+      - lms-vol:/app/data      # 1. सर्विस में Volume जोड़ा
+    networks:
+      - lms-portal             # 1. सर्विस में Network जोड़ा
+    restart: always
+
+volumes:
+  lms-vol:                     # 2. Volume नाम डिक्लेयर किया
+
+networks:
+  lms-portal:                  # 2. Network नाम डिक्लेयर किया
+    driver: bridge
+
