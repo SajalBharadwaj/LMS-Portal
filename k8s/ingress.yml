@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lms-portal-ingress
+  namespace: lms-production
+spec:
+  rules:
+  - host: lms.apex-university.edu
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: lms-portal-service
+            port:
+              number: 80
+

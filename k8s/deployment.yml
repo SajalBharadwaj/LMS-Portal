@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lms-portal-deployment
+  namespace: lms-production
+  labels:
+    app: lms-portal
+spec:
+  replicas: 3                       # 3 Pods चलेंगे (High Availability)
+  selector:
+    matchLabels:
+      app: lms-portal
+  template:
+    metadata:
+      labels:
+        app: lms-portal
+    spec:
+      containers:
+      - name: lms-container
+        image: sajal30/lms-portal:latest   # आपकी Docker Hub इमेज
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "50m"
+          limits:
+            memory: "512Mi"
+            cpu: "250m"
+        envFrom:
+        - configMapRef:
+            name: lms-config
+        - secretRef:
+            name: lms-secret
+
+
